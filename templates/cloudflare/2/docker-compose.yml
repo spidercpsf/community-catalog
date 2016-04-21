@@ -1,5 +1,5 @@
 cloudflare:
-  image: rancher/external-dns:v0.3.0
+  image: giangndm/external-dns:latest
   command: -provider=cloudflare
   expose: 
    - 1000
