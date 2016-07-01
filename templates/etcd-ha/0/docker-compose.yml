@@ -33,6 +33,7 @@ etcd-discovery:
 bootstrap:
   image: rancher/etcd:v2.3.0
   command: bootstrap ${REPLICAS}
-  link: container:etcd-discovery
+  links:
+    - etcd-discovery
   labels:
     io.rancher.container.start_once: 'true'
