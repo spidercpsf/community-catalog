@@ -24,3 +24,4 @@ letsencrypt:
   labels:
     io.rancher.container.create_agent: 'true'
     io.rancher.container.agent.role: 'environment'
+    io.rancher.scheduler.affinity:host_label: core=true
