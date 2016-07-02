@@ -19,6 +19,8 @@ node-exporter:
 prom-conf:
     tty: true
     image: infinityworks/prom-conf:11
+    labels:
+      io.rancher.scheduler.affinity:host_label: monitor=true
     volumes:
       - /etc/prom-conf/
 
@@ -30,6 +32,7 @@ prometheus:
       - 9090:9090
     labels:
       io.rancher.sidekicks: prom-conf
+      io.rancher.scheduler.affinity:host_label: monitor=true
     volumes_from:
        - prom-conf
     links:
@@ -44,6 +47,8 @@ influxdb:
     - 8086:8086
     - 8090:8090
     - 2003:2003
+  labels:
+      io.rancher.scheduler.affinity:host_label: monitor=true
   environment:
     - PRE_CREATE_DB=grafana;prometheus;rancher
     - GRAPHITE_DB=rancher
@@ -53,6 +58,8 @@ graf-db:
     tty: true
     image: infinityworks/graf-db:08
     command: cat
+    labels:
+      io.rancher.scheduler.affinity:host_label: monitor=true
     volumes:
       - /var/lib/grafana/
 
@@ -63,6 +70,7 @@ grafana:
       - 3000:3000
     labels:
       io.rancher.sidekicks: graf-db
+      io.rancher.scheduler.affinity:host_label: monitor=true
     volumes_from:
        - graf-db
     links:
@@ -74,4 +82,5 @@ prometheus-rancher-exporter:
     labels:
       io.rancher.container.create_agent: true
       io.rancher.container.agent.role: environment
+      io.rancher.scheduler.affinity:host_label: monitor=true
     image: infinityworks/prometheus-rancher-exporter:04
