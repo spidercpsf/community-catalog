@@ -15,12 +15,14 @@ zk:
     io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
     io.rancher.container.hostname_override: container_name
     io.rancher.sidekicks: zk-volume, zk-conf
+    io.rancher.scheduler.affinity:host_label: zookeeper=true
 zk-conf:
   net: none
   labels:
     io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
     io.rancher.container.hostname_override: container_name
     io.rancher.container.start_once: true
+    io.rancher.scheduler.affinity:host_label: zookeeper=true
   image: rawmind/rancher-zk:0.3.3
 zk-volume:
   net: none
@@ -28,6 +30,7 @@ zk-volume:
     io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
     io.rancher.container.hostname_override: container_name
     io.rancher.container.start_once: true
+    io.rancher.scheduler.affinity:host_label: zookeeper=true
   environment:
     - SERVICE_USER=zookeeper
     - SERVICE_UID=10002
